@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <style>
+  body {
+    position: relative; 
+	background-color: #4b2e83;
+  }
+  </style>
+</head>
+<body id="mydiv" data-spy="scroll" data-target=".navbar" data-offset="50">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+      </button>
+	  <div>
+	  	<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/University_of_Washington_Block_W_logo_RGB_brand_colors.SVG/1200px-University_of_Washington_Block_W_logo_RGB_brand_colors.SVG.png" alt="uwLogo" style="float:left;width:69px;height:50px;">
+      	<a class="navbar-brand" href="#">Enhancing Decision Making for robotic surgeries</a>
+	</div>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Use-case 1 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#" onClick="autoFill(1, 'Beginning_general', 'Beginning', 'false'); return true;">Implicit (Enthropy)</a></li>
+                <li><a href="#" onClick="autoFill(2, 'Beginning_general', 'Beginning', 'false'); return true;">Implicit (CRITIC)</a></li>
+                <li><a href="#" onClick="autoFill(3, 'Beginning_general', 'Beginning', 'true'); return true;">Explicit General</a></li>
+                <li><a href="#" onClick="autoFill(4, 'Beginning_bl', 'Beginning', 'false'); return true;">Explicit Blood Loss Centric</a></li>
+                <li><a href="#" onClick="autoFill(5, 'Beginning_rc', 'Beginning', 'false'); return true;">Explicit Cancer % Centric</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Use-case 2 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              	<li><a href="#" onClick="autoFill(6,'Beginning_general', 'Middle', 'false'); return true;">Implicit (Enthropy)</a></li>
+              	<li><a href="#" onClick="autoFill(7, 'Beginning_general', 'Middle', 'false'); return true;">Implicit (CRITIC)</a></li>
+                <li><a href="#" onClick="autoFill(8, 'Beginning_general', 'Middle', 'true'); return true;">Explicit General</a></li>
+                <li><a href="#" onClick="autoFill(9, 'Middle_dist', 'Middle', 'false'); return true;">Explicit Distance Centric</a></li>
+                <li><a href="#" onClick="autoFill(10, 'Middle_vision', 'Middle', 'false'); return true;">Explicit Visual Clarity Centric</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Use-case 3 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              	<li><a href="#" onClick="autoFill(11, 'Beginning_general', 'Ending', 'false'); return true;">Implicit (Enthropy)</a></li>
+              	<li><a href="#" onClick="autoFill(12, 'Beginning_general', 'Ending', 'false'); return true;">Implicit (CRITIC)</a></li>
+				        <li><a href="#" onClick="autoFill(13, 'Beginning_general', 'Ending', 'true'); return true;">Explicit General</a></li>
+				        <li><a href="#" onClick="autoFill(14, 'Ending_muc', 'Ending', 'false'); return true;">Explicit Mucosa Centric</a></li>
+				        <li><a href="#" onClick="autoFill(15, 'Ending_br', 'Ending', 'false'); return true;">Explicit Bleeding Rate Centric</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="row" style="padding-top:60px;background-color: #4b2e83;">
+  <div class="col-md-3" >
+    <form class="form-horizontal" id="form" style="margin-left:10px;height:700px;color: #fff;" action="#">
+      <div class="form-group">
+        <label class="control-label col-sm-4" style="text-align:left" id="cpu_lab">Risk of cancer:</label>
+        <div class="col-xs-3">
+          <input type="text" class="form-control" id="cpu">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" style="text-align:left" id="mem_lab">Blood loss:</label>
+        <div class="col-xs-3">
+          <input type="text" class="form-control" id="mem">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" style="text-align:left" id="dr_lab">Risk with size:</label>
+        <div class="col-xs-3">
+          <input type="text" class="form-control" id="dr">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" style="text-align:left" id="net_lab">Risk to liver:</label>
+        <div class="col-xs-3">
+          <input type="text" class="form-control" id="net">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          	<button type="submit" id="submitbutton" class="btn btn-default">Submit</button>
+         	<button type="reset" class="btn btn-default">Clear</button>
+        </div>
+		<img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Davinci-xi-surgical-system.png" alt="Davinci-xi-surgical-system" style="float:left;width:300px;height:330px;">
+      </div>
+	  <input type="text" id="sh_n" style="width: 1px;height: 1px;">
+	  <input type="text" id="tp_sh_n" style="width: 1px;height: 1px;">
+    <input type="bool" id="gen" style="width: 1px;height: 1px;">
+    </form>	
+  </div>
+  <div class="col-md-5">
+	  <div class="panel-group">
+	    <div class="panel panel-info">
+	      <div class="panel-heading" style="background-color: #85754d;"><b style="color: #fff;">Selected Resource</b></div>
+	      <div class="panel-body" style="background-color: #b7a57a;">
+		    <p class="card-text" id="vm"></p>
+			<p class="card-text" id="bs"></p>
+			<p class="card-text" id="dcpu"></p>
+			<p class="card-text" id="dmem"></p>
+	      </div>
+	    </div>
+	  </div>
+		<div class="panel-group">
+	    <div class="panel panel-info">
+	      <div class="panel-heading"  style="background-color: #85754d;"><b style="color: #fff;">Top 5 resources</b></div>
+				<table id="topvm" class="table table-striped"></table>
+			</div>
+		</div>	
+		<div class="panel-group">
+	    <div class="panel panel-info">
+	      <div class="panel-heading"  style="background-color: #85754d;"><b style="color: #fff;">Correlation Table</b></div>
+				<table id="topvm2" class="table table-striped"></table>
+			</div>
+		</div>
+  </div>
+  	<div class="col-md-4" id="img" style="visibility:hidden">
+		<label class="control-label col-sm-4" style="text-align:left;color:#fff">Graph A: Baseline (No preference)</label>
+		<img src="/static/graph.png" class="img-rounded" id="i1" style="width:400px">
+		<label class="control-label col-sm-4" style="text-align:left;color:#fff">Graph B: Current</label>
+		<img src="/static/graph.png" class="img-rounded" id="i2" style="width:400px">		
+	</div>
+  </div>
+</div>
+<script type="text/javascript">
+var casetype;
+var first = true;
+	function autoFillVal(cpu,mem,dr,net, sh_n, tp_sh_n, gen) {
+		document.getElementById('cpu').value = cpu;
+		document.getElementById('mem').value = mem;
+		document.getElementById('dr').value = dr;
+		document.getElementById('net').value = net;
+		document.getElementById('sh_n').value = sh_n;
+		document.getElementById('tp_sh_n').value = tp_sh_n;
+		document.getElementById('gen').value = gen;
+	}
+  function autoFill(c, sh_n, tp_sh_n, gen) {
+    switch (c) {
+	  case 1:
+		  cpu=0.2654255,mem=0.24682069,net=0.26402503,dr=0.22372878
+	    break;
+
+	  case 2:
+      cpu=0.23983225,mem=0.29650977,net=0.22968917,dr=0.23396882
+      break;
+
+	  case 3:
+      var val = 1/4;
+      cpu=val,mem=val,net=val,dr=val;
+	    break;
+
+	  case 4:
+		  cpu=0,mem=1,net=0,dr=0;
+	    break;
+
+	  case 5:
+		  cpu=1,mem=0,net=0,dr=0;
+	    break;
+	
+	  case 6:
+		  cpu=0.25971757,mem=0.25180084,net=0.25800968,dr=0.23047191;
+	    break;
+
+	  case 7:
+		  cpu=0.18658618,mem=0.18632757,net=0.26519482,dr=0.36189143;
+	    break;
+	
+		case 8:
+      var val = 1/4;
+      cpu=val,mem=val,net=val,dr=val;
+	    break;
+
+		case 9:
+      cpu=0,mem=1,net=0,dr=0;
+      break;
+
+		case 10:
+      cpu=0,mem=0,net=0,dr=1;
+      break;
+
+		case 11:
+      cpu=0.25721555,mem=0.27003203,net=0.20966741,dr=0.263085;
+      break;
+
+		case 12:
+      cpu=0.20312574,mem=0.33146057,net=0.22999701,dr=0.23541667;
+      break;
+
+    case 13:
+      var val = 1/4;
+      cpu=val,mem=val,net=val,dr=val;
+      break;
+    
+    case 14:
+      cpu=0,mem=1,net=0,dr=0;
+      break;
+    
+    case 15:
+      cpu=0,mem=0,net=1,dr=0;
+      break;
+		
+		}
+		casetype = c; 
+		autoFillVal(cpu,mem,dr,net, sh_n, tp_sh_n, gen);
+  }
+  
+  function runPyScript(input){
+        var jqXHR = $.ajax({
+            type: "POST",
+            url: "/bestsmp11",
+            async: false,
+            data: { mydata: input }
+        });
+
+        return jqXHR.responseText;
+    }
+
+  $('#submitbutton').click(function(){
+    general_case = document.getElementById('gen').value;
+		if (general_case == 'true') {
+			//first = false
+			//var val = 1/4;
+			//cpu=val,mem=val,net=val,dr=val;
+			//datatosend = cpu.toString()+","+mem.toString()+","+net.toString()+","+dr.toString()+","+'Beginning_general'+","+'Beginning';
+			cpu = document.getElementById('cpu').value;
+      mem = document.getElementById('mem').value;
+      dr = document.getElementById('dr').value;
+      net = document.getElementById('net').value;
+      sh_n = document.getElementById('sh_n').value;
+      tp_sh_n = document.getElementById('tp_sh_n').value;
+      
+      datatosend = cpu.toString()+","+mem.toString()+","+net.toString()+","+dr.toString()+","+sh_n+","+tp_sh_n;
+      
+      result = runPyScript(datatosend);
+			arr = result.split(",");
+			name = arr[arr.length-1]
+			document.getElementById("i1").src = name;
+      document.getElementById("i2").src = name;
+		}
+        else{
+      cpu = document.getElementById('cpu').value;
+      mem = document.getElementById('mem').value;
+      dr = document.getElementById('dr').value;
+      net = document.getElementById('net').value;
+      sh_n = document.getElementById('sh_n').value;
+      tp_sh_n = document.getElementById('tp_sh_n').value;
+      
+      datatosend = cpu.toString()+","+mem.toString()+","+net.toString()+","+dr.toString()+","+sh_n+","+tp_sh_n;
+      result = runPyScript(datatosend);
+      arr = result.split(",");
+      name = arr[arr.length-1]
+      document.getElementById("i2").src = name;
+    }
+      document.getElementById("img").style.visibility = "visible";
+    
+    var res = new Array();
+    for(var i=0; i<arr.length-1; i++) {
+		r = arr[i].split(" ");
+		var a = new Array();
+		for(var j=0; j<r.length-1; j++) {
+			a.push(r[j]);
+		}
+		res.push(a);
+	}
+
+  const b_names = ["Risk of cancer, %:  ", "Blood loss, mL:  ", "Risk with size, %:  ", "Risk to liver, %:  "];
+  const m_names = ["Bleeding rate, ml:  ", "Distance to portal vein, mm:  ", "Distance to portal venous branch, mm:  ", "Imaging, %:  "];
+  const e_names = ["Distance to bile duct diameter, mm:  ", "Amount of mucosa, mmHg:  ", "Bleeding rate, ml:  ", "Imaging, %:  "];
+
+  if(tp_sh_n == 'Beginning'){
+    output = b_names
+  }
+  else if(tp_sh_n == 'Middle'){
+    output = m_names
+  }
+  else{
+    output = e_names
+  }
+
+	document.getElementById("vm").innerHTML = output[0] + parseFloat(res[0][0]).toFixed(4);	
+  document.getElementById("bs").innerHTML = output[1] + parseFloat(res[0][1]).toFixed(4);
+	document.getElementById("dcpu").innerHTML = output[2] + parseFloat(res[0][2]).toFixed(4);
+	document.getElementById("dmem").innerHTML = output[3] + parseFloat(res[0][3]).toFixed(4);
+  document.getElementById("cpu_lab").innerHTML = output[0] 
+  document.getElementById("mem_lab").innerHTML = output[1]
+	document.getElementById("dr_lab").innerHTML = output[2] 
+	document.getElementById("net_lab").innerHTML = output[3]
+	
+	GenerateTable(res, output)
+  GenerateTable2(res[res.length-1])
+  });
+
+	function sleep(milliseconds) {
+		const date = Date.now();
+		let currentDate = null;
+		do {
+			currentDate = Date.now();
+		} while (currentDate - date < milliseconds);
+	}
+
+	function GenerateTable(res, output) {
+		//Create a HTML Table element.
+		var table = document.getElementById("topvm");
+		table.innerHTML = "";
+		//Get the count of columns.
+		var columnCount = res[0].length;
+		var headers = [output[0], output[1], output[2], output[3], 'PST', 'PSA', 'PSP', 'PSF'];
+		//Add the header row.
+		var row = table.insertRow(-1);	
+		for (var i = 0; i < columnCount; i++) {
+		var headerCell = document.createElement("TH");
+		headerCell.innerHTML = headers[i];
+		row.appendChild(headerCell);
+		}
+
+		//Add the data rows.
+		for (var i = 0; i < 5; i++) {
+		row = table.insertRow(-1);
+		for (var j = 0; j < columnCount; j++) {
+			var cell = row.insertCell(-1);
+			val = parseFloat(res[i][j]).toFixed(3);
+		cell.innerHTML = val;
+		}
+		}
+	}
+
+    function GenerateTable2(res) {
+		  //Create a HTML Table element.
+		  var table = document.getElementById("topvm2");
+		  table.innerHTML = "";
+		  //Get the count of columns.
+		  var columnCount = res.length;
+		  var headers = ['T vs AHP', 'T vs P', 'AHP vs P', 'AHP vs F', 'P vs F', 'T vs F'];
+		  //Add the header row.
+		  var row = table.insertRow(-1);	
+		  for (var i = 0; i < columnCount; i++) {
+	      var headerCell = document.createElement("TH");
+	      headerCell.innerHTML = headers[i];
+	      row.appendChild(headerCell);
+		  }
+
+		  //Add the data rows.
+      row = table.insertRow(-1);
+      for (var j = 0; j < columnCount; j++) {
+            var cell = row.insertCell(-1);
+      val = parseFloat(res[j]).toFixed(3);
+        cell.innerHTML = val;
+      }
+    
+	}
+
+</script>
+</body>
+</html>
